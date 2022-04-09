@@ -1,0 +1,89 @@
+<div class="mt-3">
+  <div *ngIf="!errorPatientDetails; else error">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event); sortData()"
+      class="mat-elevation-z0"
+    >
+      <!-- Position Column -->
+      <ng-container matColumnDef="family">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by family name"
+        >
+          Family Name.
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.family }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="givenName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by given name"
+        >
+          Given Name
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.givenName }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.gender || "n/a" }}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="birthDate">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by birthDate"
+        >
+          Birth date
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.birthDate || "n/a" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Symbol</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.address || "n/a" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="telecom">
+        <th mat-header-cell *matHeaderCellDef>phone</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element?.telecom || "n/a" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="queryDate">
+        <td mat-footer-cell *matFooterCellDef colspan="2">
+          {{ "Query Date:: " + (queryDate | date: "short") }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="['queryDate']"></tr>
+    </table>
+  </div>
+  <ng-template #error>
+    <div class="alert alert-danger" role="alert">
+      <p>Error in retriewing patients data.</p>
+      <p>{{ errorPatientDetails }}</p>
+    </div></ng-template
+  >
+</div>
